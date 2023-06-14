@@ -56,12 +56,17 @@
                 </form>
               </td>
               @endif
-
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <a href="#" class="ml-2 font-medium text-teal-600 hover:underline">View</a>
-                <a href="#" class="ml-2 font-medium text-blue-600 hover:underline">Edit</a>
-                <!-- Link to open the modal -->
-                <a href="#{{$product->id}}" rel="modal:open" class="ml-2 font-medium text-red-600  hover:underline">Delete</a>
+                <a href="#view-{{$product->id}}" rel="modal:open" class="ml-2 font-medium text-teal-600 hover:underline">View</a>
+                @include('admin.products.show')
+                <a href="#edit-{{$product->id}}" rel="modal:open" class="ml-2 font-medium text-blue-600 hover:underline">Edit</a>
+                @include('admin.products.edit')
+                <!-- DELETE -->
+                <form class="inline-block" action="{{ route('admin.products.destroy', $product->id) }}" method="POST">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  <input type="submit" class="ml-2 font-medium text-red-600 hover:underline cursor-pointer" value="Delete">
+                </form>
                 <!--END OF DELETE BUTTON-->
               </td>
               @endforeach
@@ -70,25 +75,31 @@
         </table>
       </div>
       <!--/Card-->
+      <div class="mt-4 mb-4 float-right text-sm ">
+        <a href="#create-new" rel="modal:open" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md font-semibold text-xs text-gray-600 uppercase tracking-widest shadow-md bg-green-300 hover:bg-green-400 hover:text-gray-200 disabled:opacity-25 transition ease-in-out duration-150">New Product
+        </a>
+        @include('admin.products.create')
+      </div>
     </div>
     <!--/container-->
 
-      </div>
+    </div>
+    
   </div> 
-  <!-- jQuery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <!--Datatables -->
-      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-      <script>
-        $(document).ready(function() {
-
-          var table = $('#example').DataTable({
-              responsive: true
-            })
-            .columns.adjust()
-            .responsive.recalc();
-        });
-
-      </script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script>
+      $(document).ready(function() {
+      var table = $('#example').DataTable({
+      responsive: true
+      })
+        .columns.adjust()
+        .responsive.recalc();
+     });
+  </script>
 </x-app-layout>
+<!-- 
+  <a href="#delete-{{$product->id}}" rel="modal:open" class="ml-2 font-medium text-red-600  hover:underline">Delete</a>
+  @include('admin.products.delete')
+-->

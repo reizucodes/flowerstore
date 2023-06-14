@@ -33,6 +33,18 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            Product::create([
+                'product_name' => $request->product_name,
+                'product_description' => $request->product_description,
+                'price' => $request->price,
+                'quantity' => $request->quantity,
+                'status' => 1, #default status is active
+            ]);
+            return redirect()->back()->with('success', 'Product added.');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('error', $exception->getMessage());
+        }
     }
 
     /**
@@ -41,6 +53,8 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
+        $product = Product::find($id);
+        return view('admin.products.show')->with('product', $product);
     }
 
     /**
@@ -64,9 +78,26 @@ class ProductController extends Controller
             if ($request->update == "statusChange") {
                 $product->status = ($request->input('status'));
                 $product->update();
-                return redirect()->route('admin.products.index')->with('success', "Status Updated");
-            } else { #this is for edit product
-
+                return back()->with('success', "Status Updated");
+            } else {
+                //if quantity is 0, disable product
+                if ($request->quantity == 0) {
+                    $product->update([
+                        'product_name' => $request->product_name,
+                        'product_description' => $request->product_description,
+                        'price' => $request->price,
+                        'quantity' => $request->quantity,
+                        'status' => 0,
+                    ]);
+                } else {
+                    $product->update([
+                        'product_name' => $request->product_name,
+                        'product_description' => $request->product_description,
+                        'price' => $request->price,
+                        'quantity' => $request->quantity,
+                    ]);
+                }
+                return back()->with('success', 'Product updated.');
             }
         } catch (Exception $exception) {
         }
@@ -75,8 +106,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
         //
+        $product->delete();
+        return back()->with('success', 'Product deleted.');
     }
 }
