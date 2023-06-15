@@ -13,7 +13,8 @@
     3. php artisan key:generate
     4. php artisan migrate
     5. php artisan db:seed
-    6. php artisan serve
+    7. npm run build or npm run dev
+    8. php artisan serve
 ## Dummy Credentials
     admin@gmail.com
     password
