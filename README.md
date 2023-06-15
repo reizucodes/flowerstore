@@ -1,4 +1,9 @@
 # Flowerstore.ph
+## Technologies 
+    Laravel Breeze
+    Tailwind CSS
+    jQuery
+    JavaScript
 ## How to run app
 - Configure database **before** migration
 - Create **flowerstore** db 
