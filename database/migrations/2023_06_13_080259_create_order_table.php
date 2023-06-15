@@ -16,14 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('price', 8, 2);
+            $table->integer('order_quantity');
+            $table->decimal('total', 8, 2);
             $table->timestamps();
             //foreign key constraints
             //if a user is deleted, their records are also deleted
+            //if product is deleted, any order with product referenced is deleted
             $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */
