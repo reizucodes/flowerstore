@@ -6,14 +6,14 @@
     JavaScript
 ## How to run app
 - Configure database **before** migration
-- Create **flowerstore** db 
-### Commands 💻 
-    composer install
-    cp .env.example .env
-    php artisan key:generate
-    php artisan migrate
-    php artisan db:seed
-    php artisan serve
+- Create **_flowerstore_** db 
+### Initial Commands  💻 
+    1. composer install
+    2. cp .env.example .env
+    3. php artisan key:generate
+    4. php artisan migrate
+    5. php artisan db:seed
+    6. php artisan serve
 ## Dummy Credentials
     admin@gmail.com
     password
